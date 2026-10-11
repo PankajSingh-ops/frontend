@@ -22,10 +22,33 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock background scrolling when mobile menu drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      const prevBodyOverflow = document.body.style.overflow;
+      const prevHtmlOverflow = document.documentElement.style.overflow;
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setIsOpen(false);
+      };
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        document.body.style.overflow = prevBodyOverflow;
+        document.documentElement.style.overflow = prevHtmlOverflow;
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [isOpen]);
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-bg/80 backdrop-blur-md border-b border-line py-3" : "bg-transparent py-5"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-3.5 ${
+        scrolled
+          ? "bg-bg/80 backdrop-blur-md border-b border-line lg:py-3"
+          : "bg-transparent lg:py-5"
       }`}
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -56,6 +79,7 @@ export function Navbar() {
           className="lg:hidden p-2 text-white min-w-[44px] min-h-[44px] flex flex-col justify-center gap-[6px] items-end z-50 relative"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
+          aria-expanded={isOpen}
         >
           <span className={`h-[2px] bg-white transition-all duration-300 ${isOpen ? "w-6 rotate-45 translate-y-[8px]" : "w-8"}`} />
           <span className={`h-[2px] bg-white transition-all duration-300 ${isOpen ? "w-0 opacity-0" : "w-6"}`} />
@@ -65,7 +89,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       <div
-        className={`fixed inset-0 bg-bg/95 backdrop-blur-xl z-40 lg:hidden flex flex-col items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`fixed inset-0 h-screen h-dvh bg-bg/95 backdrop-blur-xl z-40 lg:hidden flex flex-col items-center justify-center touch-none overscroll-none transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         }`}
       >

@@ -22,12 +22,13 @@ export function MediaImage({
 
   if (src) {
     if (fill) {
+      const fitClass = className.includes("object-") ? "" : "object-cover ";
       return (
         <Image
           src={src}
           alt={alt}
           fill
-          className={`object-cover ${className}`}
+          className={`${fitClass}${className}`}
           priority={priority}
         />
       );
