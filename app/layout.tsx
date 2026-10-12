@@ -33,7 +33,11 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/ankur logo.webp",
+    icon: [
+      { url: "/favicon.webp", type: "image/webp" },
+    ],
+    shortcut: "/favicon.webp",
+    apple: "/favicon.webp",
   },
 };
 
