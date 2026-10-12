@@ -2,17 +2,21 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Button } from "../ui/Button";
 
-const navLinks = [
-  { name: "HOME", href: "#home" },
-  { name: "ABOUT", href: "#about" },
-  { name: "MEDIA", href: "#media" },
-  { name: "GALLERY", href: "#gallery" },
-  { name: "CYBER WARRIOR", href: "#cyber-warrior" },
-];
-
 export function Navbar() {
+  const pathname = usePathname();
+  const isInnerPage = pathname !== "/" && pathname !== "";
+
+  const navLinks = [
+    { name: "HOME", href: isInnerPage ? "/#home" : "#home" },
+    { name: "ABOUT", href: isInnerPage ? "/#about" : "#about" },
+    { name: "MEDIA", href: "/media" },
+    { name: "GALLERY", href: "/gallery" },
+    { name: "CYBER WARRIOR", href: "/cyber-warrior" },
+  ];
+
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,6 +47,10 @@ export function Navbar() {
     }
   }, [isOpen]);
 
+  const isLinkActive = (href: string) => {
+    return pathname === href;
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-3.5 ${
@@ -53,7 +61,7 @@ export function Navbar() {
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo lockup */}
-        <a href="#home" className="flex items-center gap-3 group z-50 relative">
+        <a href={isInnerPage ? "/#home" : "#home"} className="flex items-center gap-3 group z-50 relative">
           <div className="relative w-10 h-10 flex items-center justify-center overflow-hidden rounded bg-transparent">
             <Image src="/ankur logo.webp" alt="Ankur Chandrakant Logo" fill className="object-contain drop-shadow-md" sizes="40px" />
           </div>
@@ -61,17 +69,31 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-muted hover:text-white transition-colors relative group"
-            >
-              {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-300"></span>
-            </a>
-          ))}
-          <Button href="#contact" variant="primary">LET&apos;S TALK</Button>
+          {navLinks.map((link) => {
+            const active = isLinkActive(link.href);
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                className={`text-sm font-medium transition-all relative group flex items-center ${
+                  active
+                    ? "text-white font-semibold drop-shadow-[0_0_8px_rgba(47,123,255,0.7)]"
+                    : "text-muted hover:text-white"
+                }`}
+              >
+                {active && (
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent-cyan shadow-[0_0_8px_#22d3ee] mr-2 animate-pulse" />
+                )}
+                {link.name}
+                <span
+                  className={`absolute -bottom-1 left-0 h-[2px] bg-primary transition-all duration-300 ${
+                    active ? "w-full shadow-[0_0_10px_#2f7bff]" : "w-0 group-hover:w-full"
+                  }`}
+                />
+              </a>
+            );
+          })}
+          <Button href={isInnerPage ? "/#contact" : "#contact"} variant="primary">LET&apos;S TALK</Button>
         </nav>
 
         {/* Mobile Toggle */}
@@ -94,17 +116,27 @@ export function Navbar() {
         }`}
       >
         <nav className="flex flex-col items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className="font-display text-4xl tracking-wider text-muted hover:text-white hover:scale-105 transition-all"
-            >
-              {link.name}
-            </a>
-          ))}
-          <Button href="#contact" variant="primary" className="mt-4" onClick={() => setIsOpen(false)}>
+          {navLinks.map((link) => {
+            const active = isLinkActive(link.href);
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`font-display text-4xl tracking-wider hover:scale-105 transition-all flex items-center gap-3 ${
+                  active
+                    ? "text-primary drop-shadow-[0_0_18px_rgba(47,123,255,0.8)]"
+                    : "text-muted hover:text-white"
+                }`}
+              >
+                {active && (
+                  <span className="w-2.5 h-2.5 rounded-full bg-accent-cyan shadow-[0_0_12px_#22d3ee] animate-pulse" />
+                )}
+                {link.name}
+              </a>
+            );
+          })}
+          <Button href={isInnerPage ? "/#contact" : "#contact"} variant="primary" className="mt-4" onClick={() => setIsOpen(false)}>
             LET&apos;S TALK
           </Button>
         </nav>

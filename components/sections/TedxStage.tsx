@@ -1,7 +1,6 @@
-import { CONTENT, ImageMap } from "@/lib/content";
+import { CONTENT } from "@/lib/content";
 import { Reveal } from "../ui/Reveal";
 import { SectionHeading } from "../ui/SectionHeading";
-import { MediaImage } from "../ui/MediaImage";
 
 export function TedxStage() {
   return (
@@ -23,7 +22,7 @@ export function TedxStage() {
               <div className="block w-full h-full">
                 <div className="relative aspect-video rounded-xl overflow-hidden mb-6 glass-card group-hover:shadow-[0_0_30px_rgba(var(--primary),0.2)] transition-shadow duration-500">
                   <iframe
-                    src={`https://www.youtube.com/embed/${(card as any).videoUrl.split('v=')[1]}`}
+                    src={`https://www.youtube.com/embed/${card.videoUrl.split('v=')[1]}`}
                     title={card.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen

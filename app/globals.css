@@ -14,6 +14,7 @@
 
   --font-display: var(--font-anton), "sans-serif";
   --font-sans: var(--font-poppins), "sans-serif";
+  --font-mono: var(--font-mono), "JetBrains Mono", monospace;
 }
 
 @layer base {
@@ -71,12 +72,22 @@
   100% { transform: translateX(-50%); }
 }
 
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
 .animate-marquee {
   animation: marquee 30s linear infinite;
 }
 
+.animate-marquee-reverse {
+  animation: marquee-reverse 30s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
+  .animate-marquee,
+  .animate-marquee-reverse {
     animation: none;
   }
 }
@@ -102,4 +113,87 @@
     animation: none !important;
     transform: none !important;
   }
+  .animate-cyber-glitch,
+  .animate-radar-sweep,
+  .animate-cyber-scan,
+  .animate-error-shake {
+    animation: none !important;
+  }
 }
+
+/* Cyber HUD Aesthetics */
+@keyframes cyber-glitch {
+  0%, 86%, 100% {
+    text-shadow: none;
+    transform: none;
+  }
+  88% {
+    text-shadow: -2px 0 #22d3ee, 2px 0 #ef4444;
+    transform: translate(-1px, 1px);
+  }
+  90% {
+    text-shadow: 2px 0 #22d3ee, -2px 0 #ef4444;
+    transform: translate(1px, -1px);
+  }
+  92% {
+    text-shadow: -1px 0 #2f7bff, 1px 0 #22d3ee;
+    transform: translate(0, 0);
+  }
+}
+
+.animate-cyber-glitch {
+  animation: cyber-glitch 4s ease-in-out infinite;
+}
+
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-radar-sweep {
+  animation: radar-sweep 8s linear infinite;
+}
+
+@keyframes cyber-scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  40% { opacity: 0.7; }
+  80% { opacity: 0.7; }
+  100% { transform: translateY(400%); opacity: 0; }
+}
+
+.animate-cyber-scan {
+  animation: cyber-scan 3s ease-in-out infinite;
+}
+
+@keyframes error-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.animate-error-shake {
+  animation: error-shake 0.4s ease-in-out;
+}
+
+.cyber-panel {
+  background: rgba(11, 23, 48, 0.55);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(120, 160, 255, 0.16);
+  box-shadow: 0 0 25px rgba(47, 123, 255, 0.06), inset 0 0 15px rgba(34, 211, 238, 0.03);
+}
+
+.cyber-panel-glow {
+  background: rgba(11, 23, 48, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(47, 123, 255, 0.35);
+  box-shadow: 0 0 35px rgba(47, 123, 255, 0.15), inset 0 0 20px rgba(47, 123, 255, 0.06);
+}
+
+.cyber-clip-corner {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.cyber-clip-tl-br {
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Poppins } from "next/font/google";
+import { Anton, Poppins, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const anton = Anton({
@@ -13,6 +13,13 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -42,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${anton.variable} ${poppins.variable} scroll-smooth`}
+      className={`${anton.variable} ${poppins.variable} ${jetbrainsMono.variable} scroll-smooth`}
     >
       <body className="min-h-screen bg-bg text-text font-sans antialiased overflow-x-hidden selection:bg-primary selection:text-white">
         {children}

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { LINKS } from "@/lib/content";
 import { InstagramIcon, LinkedinIcon, YoutubeIcon, FacebookIcon } from "@/components/ui/SocialIcons";
 
@@ -30,11 +31,12 @@ export function Footer() {
         <div>
           <h4 className="text-white font-semibold mb-6">Useful Links</h4>
           <ul className="flex flex-col gap-3 text-sm text-muted">
-            <li><a href="#home" className="hover:text-primary transition-colors">Home</a></li>
-            <li><a href="#about" className="hover:text-primary transition-colors">About</a></li>
-            <li><a href="#gallery" className="hover:text-primary transition-colors">Gallery</a></li>
-            <li><a href="#cyber-warrior" className="hover:text-primary transition-colors">Cyber Warrior</a></li>
-            <li><a href="#contact" className="hover:text-primary transition-colors">Contact</a></li>
+            <li><Link href="/#home" className="hover:text-primary transition-colors">Home</Link></li>
+            <li><Link href="/#about" className="hover:text-primary transition-colors">About</Link></li>
+            <li><Link href="/gallery" className="hover:text-primary transition-colors">Gallery</Link></li>
+            <li><Link href="/cyber-warrior" className="hover:text-primary transition-colors">Cyber Warrior</Link></li>
+            <li><Link href="/media" className="hover:text-primary transition-colors">Media</Link></li>
+            <li><Link href="/#contact" className="hover:text-primary transition-colors">Contact</Link></li>
           </ul>
         </div>
 
